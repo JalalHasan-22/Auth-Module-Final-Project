@@ -1,5 +1,9 @@
 # Auth-Module-Final-Project
 
+[pull request](https://github.com/JalalHasan-22/Auth-Module-Final-Project/pull/2)
+[Action page](https://github.com/JalalHasan-22/Auth-Module-Final-Project/actions)
+[Heroku app link](https://auth-api-final-project.herokuapp.com/)
+
 this will be our final project for the auth module.
 
 in this project, we are trying to imetitate a blog website where we have different roles for each user:
@@ -35,7 +39,7 @@ In this route is where we have implemented the Access Control List and Role Base
     - router.put("/article", bearerAuth(users), acl("update"), updateArticle) ==> nothing new in this route; only that this time the request is update so we search for ("update") in the user's actions array.
 
     - router.delete("/article", bearerAuth(users), acl("delete"), deleteArticle) ==> nothing new in this route; only that this time the request is delete so we search for ("delete") in the user's actions array. this can only be accessed by a user with a role of Admin.
-    
-## UML 
-![UML](https://user-images.githubusercontent.com/90922969/158219930-99faaac8-aaae-435d-a3a6-eec53ffa0d58.jpg)
 
+## UML
+
+![UML](https://user-images.githubusercontent.com/90922969/158219930-99faaac8-aaae-435d-a3a6-eec53ffa0d58.jpg)
