@@ -36,5 +36,6 @@ In this route is where we have implemented the Access Control List and Role Base
 
     - router.delete("/article", bearerAuth(users), acl("delete"), deleteArticle) ==> nothing new in this route; only that this time the request is delete so we search for ("delete") in the user's actions array. this can only be accessed by a user with a role of Admin.
     
-# UML 
-![UML](https://user-images.githubusercontent.com/90922969/158219430-220f7087-4ac8-441c-bf2c-dbe6078b4b10.jpg)
+## UML 
+![UML](https://user-images.githubusercontent.com/90922969/158219930-99faaac8-aaae-435d-a3a6-eec53ffa0d58.jpg)
+
