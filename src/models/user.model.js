@@ -2,6 +2,7 @@
 require("dotenv").config();
 const JWT = require("jsonwebtoken");
 const bcrypt = require("bcrypt");
+const SECRET = process.env.SECRET || "DKJAN";
 
 const UsersModel = (sequelize, DataTypes) => {
   const Users = sequelize.define("users", {
@@ -17,7 +18,7 @@ const UsersModel = (sequelize, DataTypes) => {
     token: {
       type: DataTypes.VIRTUAL,
       get() {
-        return JWT.sign(this.username, process.env.SECRET);
+        return JWT.sign(this.username, SECRET);
       },
     },
     role: {
@@ -43,7 +44,7 @@ const UsersModel = (sequelize, DataTypes) => {
       const user = await this.findOne({ where: { username } });
       const validUser = await bcrypt.compare(password, user.password);
       if (validUser) {
-        const token = await JWT.sign(user.username, process.env.SECRET);
+        const token = await JWT.sign(user.username, SECRET);
         user.token = token;
         return user;
       } else {
@@ -56,7 +57,7 @@ const UsersModel = (sequelize, DataTypes) => {
   };
   Users.validateToken = async function (token) {
     try {
-      const username = await JWT.verify(token, process.env.SECRET);
+      const username = await JWT.verify(token, SECRET);
       const user = await this.findOne({ where: { username } });
       if (user) return user;
       else return "Invalid Token";
