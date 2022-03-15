@@ -4,34 +4,52 @@ const express = require("express");
 const bearerAuth = require("../middleware/bearerAuth.middleware");
 const acl = require("../middleware/acl.middleware");
 const router = express.Router();
-const { users } = require("../models/index.model");
+const { users, articles } = require("../models/index.model");
 
 // Routes
-router.get("/article", bearerAuth(users), acl("read"), readArticleHandler);
 router.post("/article", bearerAuth(users), acl("create"), createNewArticle);
-router.put("/article", bearerAuth(users), acl("update"), updateArticle);
-router.delete("/article", bearerAuth(users), acl("delete"), deleteArticle);
+router.get("/article", bearerAuth(users), acl("read"), readArticleHandler);
+router.get("/article/:id", bearerAuth(users), acl("read"), readAspecificArticleHandler);
+router.put("/article:id", bearerAuth(users), acl("update"), updateArticle);
+router.delete("/article/:id", bearerAuth(users), acl("delete"), deleteArticle);
 
 // Handlers
 
 // Read One Article
-function readArticleHandler(req, res) {
-  res.status(200).send("You can read this article");
+async function readArticleHandler(req, res) {
+let Article =await articles.findAll();
+  res.status(200).json(Article);
 }
 
 // Create New Article
-function createNewArticle(req, res) {
-  res.status(200).send("You can create an article");
+async function createNewArticle(req, res) {
+  let newArticle= req.body;
+  let article =await articles.create(newArticle);
+  res.status(201).json(article);
 }
 
 // Update article
-function updateArticle(req, res) {
-  res.status(201).send("you can update this artice");
+async function updateArticle(req, res) {
+  const id = parseInt(req.params.id);
+  let updatedOne = req.body;
+  let updatedArticle=await articles.findOne({ where: { id: id } });
+  let updateArticle = await updatedArticle.update(updatedOne);
+  res.status(201).json(updateArticle);
 }
 
 // Delete Article
-function deleteArticle(req, res) {
-  res.status(200).send("you can delete this articel");
+async function deleteArticle(req, res) {
+  const id = parseInt(req.params.id);
+    let deleteArticle = await articles.destroy({where: {id}});
+    res.status(204).json(deleteArticle);
+}
+
+//readAspecificArticleHandler
+async function readAspecificArticleHandler(req,res){
+  const id = parseInt(req.params.id);
+    const ArticleID = await articles.findOne({ where:{ id: id}});
+    res.status(200).json(ArticleID);
+
 }
 
 module.exports = router;
