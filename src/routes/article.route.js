@@ -9,12 +9,7 @@ const { users, articles } = require("../models/index.model");
 // Routes
 router.post("/article", bearerAuth(users), acl("create"), createNewArticle);
 router.get("/article", bearerAuth(users), acl("read"), readArticleHandler);
-router.get(
-  "/article/:id",
-  bearerAuth(users),
-  acl("read"),
-  readAspecificArticleHandler
-);
+router.get("/article/:id", bearerAuth(users), acl("read"), readAspecificArticleHandler);
 router.put("/article/:id", bearerAuth(users), acl("update"), updateArticle);
 router.delete("/article/:id", bearerAuth(users), acl("delete"), deleteArticle);
 
