@@ -17,14 +17,14 @@ router.delete("/article/:id", bearerAuth(users), acl("delete"), deleteArticle);
 
 // Read One Article
 async function readArticleHandler(req, res) {
-let Article =await articles.findAll();
+  let Article = await articles.findAll();
   res.status(200).json(Article);
 }
 
 // Create New Article
 async function createNewArticle(req, res) {
-  let newArticle= req.body;
-  let article =await articles.create(newArticle);
+  let newArticle = req.body;
+  let article = await articles.create(newArticle);
   res.status(201).json(article);
 }
 
@@ -32,7 +32,7 @@ async function createNewArticle(req, res) {
 async function updateArticle(req, res) {
   const id = parseInt(req.params.id);
   let updatedOne = req.body;
-  let updatedArticle=await articles.findOne({ where: { id: id } });
+  let updatedArticle = await articles.findOne({ where: { id: id } });
   let updateArticle = await updatedArticle.update(updatedOne);
   res.status(201).json(updateArticle);
 }
@@ -40,16 +40,15 @@ async function updateArticle(req, res) {
 // Delete Article
 async function deleteArticle(req, res) {
   const id = parseInt(req.params.id);
-    let deleteArticle = await articles.destroy({where: {id}});
-    res.status(204).json(deleteArticle);
+  let deleteArticle = await articles.destroy({ where: { id } });
+  res.status(204).json(deleteArticle);
 }
 
 //readAspecificArticleHandler
-async function readAspecificArticleHandler(req,res){
+async function readAspecificArticleHandler(req, res) {
   const id = parseInt(req.params.id);
-    const ArticleID = await articles.findOne({ where:{ id: id}});
-    res.status(200).json(ArticleID);
-
+  const ArticleID = await articles.findOne({ where: { id: id } });
+  res.status(200).json(ArticleID);
 }
 
 module.exports = router;
